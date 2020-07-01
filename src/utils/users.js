@@ -2,10 +2,6 @@ const users = []
 
 const addUser = ({ id, name, age, avatar }) => {
 
-    // Clean the data
-    name = name?.trim().toLowerCase()
-    age = age?.trim().toLowerCase()
-
     // Validate the data
     if(!name || !age || !avatar){
         return{
@@ -13,6 +9,9 @@ const addUser = ({ id, name, age, avatar }) => {
         }
     }
 
+    // Clean the data
+    name = name.trim().toLowerCase()
+    age = age.trim().toLowerCase()
 
 
     const user = { id, name, age, avatar }
