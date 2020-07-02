@@ -6,13 +6,21 @@ const { generateMessage } = require('./utils/messages')
 const { addUser, removeUser, getUser, getAllUsers } = require('./utils/users')
 
 const app = express()
-const server = http.createServer(app)
-const io = socketio(server)
+//const server = http.createServer(app)
 
-const port = process.env.PORT || 4000
+
+const port = process.env.PORT || 3000
+
+const INDEX = '/index.html';
+
 const publicDirectoryPath = path.join(__dirname, '../public')
 app.use(express.static(publicDirectoryPath))
 
+const server = express()
+  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+  .listen(port, () => console.log(`Listening on ${port}`));
+
+const io = socketio(server)
 
 io.on('connection', (socket) => {
     console.log('New WebSocket connection')
@@ -48,9 +56,12 @@ io.on('connection', (socket) => {
     })
 })
 
+
+
+
 // server instead of app
-server.listen(port, () => {
+/*server.listen(port, () => {
     console.log(`Server is up on port ${port}`)
-})
+})*/
 
 
